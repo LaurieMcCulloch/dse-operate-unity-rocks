@@ -503,6 +503,7 @@ GameObject:
   m_Component:
   - component: {fileID: 117721635}
   - component: {fileID: 117721636}
+  - component: {fileID: 117721637}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -546,6 +547,18 @@ MonoBehaviour:
     state: 0
   asteroidPrefab: {fileID: 1216533696165490433, guid: ebd971e9387ac564aa45444e2e606173, type: 3}
   asteroids: []
+--- !u!114 &117721637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117721634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 969bb34706eb8439ca4c738171885092, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &192372903
 RectTransform:
   m_ObjectHideFlags: 0

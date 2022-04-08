@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+using Unity.Services.Core;
+using Unity.Services.Core.Environments;
+using Unity.Services.Core.Analytics;
 
 public class GameManager : MonoBehaviour
 {
-
+    public static GameManager Instance;
+    public static UGSAnalytics Analytics;
 
     public Game game;
     private GameObject panelAttract;
@@ -17,10 +20,24 @@ public class GameManager : MonoBehaviour
     public GameObject asteroidPrefab;
     public List<GameObject> asteroids;
 
-
-
-
     bool isPaused = false;
+
+    private async void Awake()
+    {
+        // Create Static Inastance on UGSManager
+        Instance = this;
+        Analytics = GetComponent<UGSAnalytics>();
+
+        // Set UGS Environment
+        var options = new InitializationOptions();
+        options.SetEnvironmentName("development");// Configuration.UGS_ENVIRONMENT);
+        options.SetAnalyticsUserId("Laurie");
+
+        // Initialize UGS
+        await UnityServices.InitializeAsync(options);
+    }
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -67,6 +84,7 @@ public class GameManager : MonoBehaviour
 
         isPaused = pauseStatus;
         Debug.Log("On Application Pause " + pauseStatus);
+        
         UpdateState(isPaused ? GameState.PAUSED : GameState.RESUMED);
     }
     
@@ -101,6 +119,7 @@ public class GameManager : MonoBehaviour
                 if(panelPaused!=null)
                 {
                     panelPaused.SetActive(true);
+                    Analytics.RecordEvent("gamePaused", null);
                 }
                 Debug.Log("<<PAUSED>>");
                 break;
@@ -109,6 +128,7 @@ public class GameManager : MonoBehaviour
                 if (panelPaused != null)
                 {
                     panelPaused.SetActive(false);
+                    Analytics.RecordEvent("gameResumed", null);
                 }
                 Debug.Log(">>RESUMED<<");
                 break; 
